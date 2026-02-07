@@ -3,231 +3,246 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kişisel Portfolyo & Oyun Dünyası</title>
+    <title>Kişisel Portfolyo v1.0.0</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #2c3e50;
-            --accent-color: #3498db;
-            --bg-color: #f4f7f6;
-            --text-color: #333;
+            --dark: #2c3e50;
+            --blue: #3498db;
+            --light: #f8f9fa;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             margin: 0;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background-color: #eef2f3;
+            color: #333;
         }
 
-        /* Üst Menü ve Header */
+        /* Üst Bar */
         header {
-            background-color: var(--primary-color);
+            background-color: var(--dark);
             color: white;
-            padding: 1rem 2rem;
+            padding: 10px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 20px;
-            margin: 0;
-            padding: 0;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .header-right {
+        .nav-left { cursor: pointer; font-weight: bold; }
+        
+        .nav-right {
             display: flex;
             align-items: center;
             gap: 15px;
         }
 
-        .version-badge {
+        .version {
             background: #e74c3c;
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 0.8rem;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 12px;
         }
 
-        .log-btn {
-            background: var(--accent-color);
-            border: none;
+        .btn-logs {
+            background: var(--blue);
             color: white;
+            border: none;
             padding: 8px 15px;
             border-radius: 5px;
             cursor: pointer;
+            transition: 0.3s;
         }
 
-        /* İçerik Alanları */
+        /* Ana İçerik Alanı */
         .container {
-            padding: 40px;
-            max-width: 1000px;
-            margin: auto;
-        }
-
-        .section { display: none; }
-        .active { display: block; }
-
-        /* Oyun Menüsü Stili */
-        .game-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .game-card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
+            max-width: 900px;
+            margin: 50px auto;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            cursor: pointer;
-            transition: transform 0.2s;
+            padding: 20px;
         }
 
-        .game-card:hover { transform: translateY(-5px); }
-        .game-card i { font-size: 3rem; margin-bottom: 10px; display: block; }
+        .welcome-box {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
 
-        /* Günlük Tablosu */
+        /* ORTADAKİ MENÜ (Resimdeki gibi) */
+        .middle-menu {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .menu-card {
+            background: var(--dark);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s, background 0.3s;
+            flex: 1;
+            max-width: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-10px);
+            background: var(--blue);
+        }
+
+        .menu-card i { font-size: 2rem; }
+
+        /* Oyun Seçenekleri (Alt Menü) */
+        .game-options {
+            display: none;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+            animation: fadeIn 0.5s;
+        }
+
+        .game-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: 0.3s;
+        }
+
+        .game-item:hover { border-color: var(--blue); }
+
+        /* Tablo Stili */
         table {
             width: 100%;
+            margin-top: 20px;
             border-collapse: collapse;
             background: white;
-            margin-top: 20px;
         }
 
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background: var(--blue); color: white; }
 
-        th { background-color: var(--accent-color); color: white; }
-
-        /* Oyun Alanı */
-        #game-canvas-container {
-            margin-top: 20px;
-            text-align: center;
-            background: #000;
-            padding: 10px;
-            display: none;
-        }
+        .hidden { display: none; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
 <header>
-    <nav>
-        <ul>
-            <li onclick="showSection('home')"><a>Anasayfa</a></li>
-            <li onclick="showSection('games')"><a><i class="fas fa-gamepad"></i> Oyunlar</a></li>
-            <li onclick="showSection('notes')"><a>Ders Notları</a></li>
-            <li onclick="showSection('movies')"><a>Filmler</a></li>
-        </ul>
-    </nav>
-    <div class="header-right">
-        <span class="version-badge">v1.0.0</span>
-        <button class="log-btn" onclick="showSection('logs')">Günlükler</button>
+    <div class="nav-left" onclick="showHome()">
+        <i class="fas fa-home"></i> Anasayfa
+    </div>
+    <div class="nav-right">
+        <span class="version">v1.0.0</span>
+        <button class="btn-logs" onclick="showSection('logs')">Günlükler</button>
     </div>
 </header>
 
 <div class="container">
-    <div id="home" class="section active">
-        <h1>Hoş Geldiniz!</h1>
-        <p>Bu proje tamamen tarafımdan geliştirilmiştir. Kişisel notlarımı, sevdiğim filmleri ve boş vakitlerimde oynadığım küçük oyunları burada topluyorum.</p>
-        <div style="background: white; padding: 20px; border-radius: 10px;">
+    
+    <div id="home-content">
+        <div class="welcome-box">
+            <h1>Hoş Geldiniz!</h1>
+            <p>Bu proje tamamen tarafımdan geliştirilmiştir. Kişisel notlarımı, filmleri ve oyunlarımı burada bulabilirsiniz.</p>
+            <hr style="opacity: 0.2;">
             <h3>Hakkımda</h3>
-            <p>Yazılım dünyasına adım atan, öğrenmeyi ve üretmeyi seven bir geliştiriciyim.</p>
+            <p>Öğrenmeye ve üretmeye meraklı bir geliştiriciyim. Bu site benim dijital dünyam.</p>
+        </div>
+
+        <div class="middle-menu">
+            <div class="menu-card" onclick="showGames()">
+                <i class="fas fa-gamepad"></i>
+                <span>Oyunlar</span>
+            </div>
+            <div class="menu-card" onclick="showSection('notes')">
+                <i class="fas fa-book"></i>
+                <span>Ders Notları</span>
+            </div>
+            <div class="menu-card" onclick="showSection('movies')">
+                <i class="fas fa-film"></i>
+                <span>Filmler</span>
+            </div>
         </div>
     </div>
 
-    <div id="games" class="section">
-        <h2>Oyun Kütüphanesi</h2>
-        <div class="game-grid">
-            <div class="game-card" onclick="startGame('snake')">
-                <i class="fas fa-snake text-success">🐍</i>
-                <h3>Yılan Oyunu</h3>
+    <div id="games-section" class="hidden">
+        <button onclick="showHome()" style="margin-bottom: 20px; cursor:pointer;">⬅ Geri Dön</button>
+        <h2>Oyun Seçin</h2>
+        <div class="game-options" style="display: grid;">
+            <div class="game-item">
+                <i class="fas fa-th-large" style="color: #9b59b6;"></i>
+                <p>Tetris</p>
             </div>
-            <div class="game-card" onclick="startGame('tetris')">
-                <i class="fas fa-cubes">🧱</i>
-                <h3>Tetris</h3>
+            <div class="game-item">
+                <i class="fas fa-circle" style="color: #f1c40f;"></i>
+                <p>Pacman</p>
             </div>
-            <div class="game-card" onclick="startGame('pacman')">
-                <i class="fas fa-ghost">🍕</i>
-                <h3>Pacman</h3>
+            <div class="game-item">
+                <i class="fas fa-worm" style="color: #2ecc71;"></i>
+                <p>Yılan Oyunu</p>
             </div>
-        </div>
-        <div id="game-canvas-container">
-            <h3 id="game-title" style="color: white;"></h3>
-            <canvas id="gameCanvas" width="400" height="400"></canvas>
-            <p style="color: white;">(Oyunlar bu alanda yüklenecek)</p>
         </div>
     </div>
 
-    <div id="logs" class="section">
+    <div id="logs" class="hidden">
+        <button onclick="showHome()" style="margin-bottom: 20px; cursor:pointer;">⬅ Geri Dön</button>
         <h2>Geliştirme Günlükleri</h2>
         <table>
             <thead>
                 <tr>
                     <th>Tarih</th>
                     <th>Versiyon</th>
-                    <th>Yapılan Değişiklikler</th>
+                    <th>Notlar</th>
                 </tr>
             </thead>
-            <tbody id="log-table-body">
+            <tbody>
                 <tr>
                     <td>07.02.2026</td>
                     <td>1.0.0</td>
-                    <td>Proje başlatıldı. Menüler, anasayfa ve oyun altyapısı kuruldu.</td>
+                    <td>Web sitesi temelleri atıldı. Orta menü ve log sistemi eklendi.</td>
                 </tr>
-                </tbody>
+            </tbody>
         </table>
     </div>
 
-    <div id="notes" class="section"><h2>Ders Notları</h2><p>Yakında eklenecek...</p></div>
-    <div id="movies" class="section"><h2>Filmler</h2><p>İzlediğim filmler listesi burada olacak.</p></div>
+    <div id="notes" class="hidden"><h2>Ders Notları</h2><button onclick="showHome()">Geri</button></div>
+    <div id="movies" class="hidden"><h2>Filmler</h2><button onclick="showHome()">Geri</button></div>
+
 </div>
 
 <script>
-    // Sekme Değiştirme Fonksiyonu
-    function showSection(sectionId) {
-        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-        document.getElementById(sectionId).classList.add('active');
-        document.getElementById('game-canvas-container').style.display = 'none';
+    function hideAll() {
+        document.getElementById('home-content').classList.add('hidden');
+        document.getElementById('games-section').classList.add('hidden');
+        document.getElementById('logs').classList.add('hidden');
+        document.getElementById('notes').classList.add('hidden');
+        document.getElementById('movies').classList.add('hidden');
     }
 
-    // Basit Oyun Başlatıcı Mesajı
-    function startGame(gameName) {
-        document.getElementById('game-canvas-container').style.display = 'block';
-        document.getElementById('game-title').innerText = gameName.toUpperCase() + " Başlatılıyor...";
-        
-        // Burada her oyun için ayrı JS fonksiyonları çağırılabilir.
-        if(gameName === 'snake') {
-            initSnakeGame();
-        }
+    function showHome() {
+        hideAll();
+        document.getElementById('home-content').classList.remove('hidden');
     }
 
-    // Örnek: Basit Yılan Oyunu Başlangıcı
-    function initSnakeGame() {
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        ctx.fillStyle = "black";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "green";
-        ctx.fillText("Yılan Oyunu Buraya Entegre Edilecek", 100, 200);
+    function showGames() {
+        hideAll();
+        document.getElementById('games-section').classList.remove('hidden');
+    }
+
+    function showSection(id) {
+        hideAll();
+        document.getElementById(id).classList.remove('hidden');
     }
 </script>
 
