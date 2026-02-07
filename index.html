@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kişisel Portfolyo v1.0.0</title>
+    <title>Kişisel Portfolyo v1.0.1</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -43,6 +43,7 @@
             padding: 3px 10px;
             border-radius: 20px;
             font-size: 12px;
+            font-weight: bold;
         }
 
         .btn-logs {
@@ -71,7 +72,7 @@
             margin-bottom: 30px;
         }
 
-        /* ORTADAKİ MENÜ (Resimdeki gibi) */
+        /* ORTADAKİ MENÜ */
         .middle-menu {
             display: flex;
             justify-content: center;
@@ -102,13 +103,12 @@
 
         .menu-card i { font-size: 2rem; }
 
-        /* Oyun Seçenekleri (Alt Menü) */
+        /* Oyun Seçenekleri */
         .game-options {
-            display: none;
+            display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 15px;
             margin-top: 30px;
-            animation: fadeIn 0.5s;
         }
 
         .game-item {
@@ -118,9 +118,11 @@
             cursor: pointer;
             border: 2px solid transparent;
             transition: 0.3s;
+            text-align: center;
         }
 
-        .game-item:hover { border-color: var(--blue); }
+        .game-item:hover { border-color: var(--blue); transform: scale(1.05); }
+        .game-item i { font-size: 2.5rem; margin-bottom: 10px; display: block; }
 
         /* Tablo Stili */
         table {
@@ -128,13 +130,15 @@
             margin-top: 20px;
             border-collapse: collapse;
             background: white;
+            border-radius: 10px;
+            overflow: hidden;
         }
 
         th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
         th { background: var(--blue); color: white; }
 
         .hidden { display: none; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .btn-back { margin-bottom: 20px; padding: 8px 15px; cursor: pointer; border-radius: 5px; border: 1px solid #ccc; }
     </style>
 </head>
 <body>
@@ -144,7 +148,7 @@
         <i class="fas fa-home"></i> Anasayfa
     </div>
     <div class="nav-right">
-        <span class="version">v1.0.0</span>
+        <span class="version">v1.0.1</span>
         <button class="btn-logs" onclick="showSection('logs')">Günlükler</button>
     </div>
 </header>
@@ -157,11 +161,11 @@
             <p>Bu proje tamamen tarafımdan geliştirilmiştir. Kişisel notlarımı, filmleri ve oyunlarımı burada bulabilirsiniz.</p>
             <hr style="opacity: 0.2;">
             <h3>Hakkımda</h3>
-            <p>Öğrenmeye ve üretmeye meraklı bir geliştiriciyim. Bu site benim dijital dünyam.</p>
+            <p>Yazılım dünyasında kendimi geliştirmeye çalışan biriyim. Sitemi sürekli güncelleyerek yeni özellikler ekliyorum.</p>
         </div>
 
         <div class="middle-menu">
-            <div class="menu-card" onclick="showGames()">
+            <div class="menu-card" onclick="showSection('games-section')">
                 <i class="fas fa-gamepad"></i>
                 <span>Oyunlar</span>
             </div>
@@ -177,15 +181,15 @@
     </div>
 
     <div id="games-section" class="hidden">
-        <button onclick="showHome()" style="margin-bottom: 20px; cursor:pointer;">⬅ Geri Dön</button>
-        <h2>Oyun Seçin</h2>
-        <div class="game-options" style="display: grid;">
+        <button class="btn-back" onclick="showHome()">⬅ Geri Dön</button>
+        <h2>Oyun Kütüphanesi</h2>
+        <div class="game-options">
             <div class="game-item">
                 <i class="fas fa-th-large" style="color: #9b59b6;"></i>
                 <p>Tetris</p>
             </div>
             <div class="game-item">
-                <i class="fas fa-circle" style="color: #f1c40f;"></i>
+                <i class="fas fa-ghost" style="color: #f1c40f;"></i>
                 <p>Pacman</p>
             </div>
             <div class="game-item">
@@ -196,7 +200,7 @@
     </div>
 
     <div id="logs" class="hidden">
-        <button onclick="showHome()" style="margin-bottom: 20px; cursor:pointer;">⬅ Geri Dön</button>
+        <button class="btn-back" onclick="showHome()">⬅ Geri Dön</button>
         <h2>Geliştirme Günlükleri</h2>
         <table>
             <thead>
@@ -209,15 +213,20 @@
             <tbody>
                 <tr>
                     <td>07.02.2026</td>
+                    <td>1.0.1</td>
+                    <td>Menü düzeni değiştirildi, orta panele taşındı ve versiyon takip sistemi güncellendi.</td>
+                </tr>
+                <tr>
+                    <td>07.02.2026</td>
                     <td>1.0.0</td>
-                    <td>Web sitesi temelleri atıldı. Orta menü ve log sistemi eklendi.</td>
+                    <td>Proje ilk haliyle oluşturuldu.</td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    <div id="notes" class="hidden"><h2>Ders Notları</h2><button onclick="showHome()">Geri</button></div>
-    <div id="movies" class="hidden"><h2>Filmler</h2><button onclick="showHome()">Geri</button></div>
+    <div id="notes" class="hidden"><h2>Ders Notları</h2><button class="btn-back" onclick="showHome()">Geri</button></div>
+    <div id="movies" class="hidden"><h2>Filmler</h2><button class="btn-back" onclick="showHome()">Geri</button></div>
 
 </div>
 
@@ -233,11 +242,6 @@
     function showHome() {
         hideAll();
         document.getElementById('home-content').classList.remove('hidden');
-    }
-
-    function showGames() {
-        hideAll();
-        document.getElementById('games-section').classList.remove('hidden');
     }
 
     function showSection(id) {
